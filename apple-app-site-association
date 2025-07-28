@@ -1,0 +1,11 @@
+{
+  "applinks": {
+    "apps": [],
+    "details": [
+      {
+        "appID": "TEAM_ID.NikoBads.nbDeals",
+        "paths": ["/oauth/callback/*"]
+      }
+    ]
+  }
+} 
