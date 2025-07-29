@@ -7,6 +7,7 @@
         .code { background: #f4f4f4; padding: 10px; border-radius: 4px; font-family: monospace; }
         .success { color: green; }
         .error { color: red; }
+        .button { background: #007AFF; color: white; padding: 10px 20px; border: none; border-radius: 6px; cursor: pointer; }
     </style>
 </head>
 <body>
@@ -21,6 +22,7 @@
                 <h2 class="error">OAuth Error</h2>
                 <p><strong>Error:</strong> ${error}</p>
                 <p><strong>Description:</strong> ${urlParams.get('error_description') || 'No description'}</p>
+                <button class="button" onclick="openApp()">Open nbDeals App</button>
             `;
         } else if (code) {
             document.body.innerHTML = `
@@ -28,14 +30,25 @@
                 <p><strong>Authorization Code:</strong></p>
                 <div class="code">${code}</div>
                 <p><strong>State:</strong> ${state || 'none'}</p>
-                <p>Copy this authorization code and use it in your app for testing.</p>
+                <button class="button" onclick="openApp()">Open nbDeals App</button>
+                <p><small>If the app doesn't open automatically, tap the button above.</small></p>
             `;
+            
+            // Try to open the app automatically
+            setTimeout(openApp, 1000);
         } else {
             document.body.innerHTML = `
                 <h2>OAuth Callback</h2>
                 <p>No authorization code or error received.</p>
+                <button class="button" onclick="openApp()">Open nbDeals App</button>
             `;
+        }
+        
+        function openApp() {
+            // Try to open the app with the OAuth data
+            const appUrl = `nbdeals://oauth/callback?code=${code || ''}&state=${state || ''}&error=${error || ''}`;
+            window.location.href = appUrl;
         }
     </script>
 </body>
-</html> 
+</html>
